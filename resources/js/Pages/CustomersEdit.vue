@@ -10,7 +10,7 @@
             <div class="mb-4">
               <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
               <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline required" id="name" placeholder="Name..." v-model="form.name">
-              <div v-if="errors.name" class="text-red-500">{{ errors.name[0] }}</div>
+              <div v-if="errors.name" class="text-red-500">{{ errors.name }}</div>
             </div>
             <div class="mb-4">
               <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
@@ -46,7 +46,7 @@
         </div>
         <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
           <button class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete Customer</button>
-          <button class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition" type="submit">Create Customer</button>
+          <button class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition" type="submit">Edit Customer</button>
         </div>
       </form>
     </div>

@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Inertia::share([
             'errors' => function () {
                 return Session::get('errors')
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
                     : (object) [];
             },
             'flash' => function () {
-                return ['message' => Session::get('message')];
+                return ['success' => Session::get('message')];
             }
         ]);
 

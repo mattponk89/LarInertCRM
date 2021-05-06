@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Exports\CustomersExport;
 use App\Imports\Customersimport;
+use Illuminate\Support\Facades\Auth;
 use Excel;
 
 
@@ -21,7 +22,7 @@ class CustomerController extends Controller
         return Inertia::render('Customers',[
             'customers' => Customer::when($request->term,(function ($query, $term){
                 $query->where('name', 'LIKE', '%'.$term.'%');
-            }))->orderBy('name')->paginate()->through(function ($item){
+            }))->orderBy('name')->paginate()->withQueryString()->through(function ($item){
                 return [
                     'id' => $item->id,
                     'name' => $item->name,
@@ -32,7 +33,9 @@ class CustomerController extends Controller
                     'cap'=> $item->cap,
                     'address' => $item->address,
                 ];
-            })
+            }),
+            'isAdmin' => Auth::user()->hasRole('admin'),
+            'search' => $request->term,
         ]);
     }
 
@@ -49,6 +52,7 @@ class CustomerController extends Controller
           'province' => "",
           'cap' => "",
         ],
+        'isAdmin' => Auth::user()->hasRole('admin'),
       ]);
     }
     /**
@@ -107,6 +111,7 @@ class CustomerController extends Controller
         'province' => $customer->province,
         'cap' => $customer->cap,
       ],
+      'isAdmin' => Auth::user()->hasRole('admin'),
     ]);
   }
     /**
@@ -140,7 +145,7 @@ class CustomerController extends Controller
         $newCustomer->save();
 
         return redirect()->route('customers.index')
-          ->with('message', 'Customer Created Successfully.');
+          ->with('message', 'Customer Edited Successfully.');
 
     }
 
@@ -164,7 +169,14 @@ class CustomerController extends Controller
      * */
     public function fileImportExport()
     {
-      return Inertia::render('ImportExport');
+      if(auth::user()->hasRole('admin')){
+        return Inertia::render('ImportExport',[
+          'isAdmin' => Auth::user()->hasRole('admin'),
+        ]);
+      }else{
+        return redirect()->route('customers.index')
+          ->with('errors', 'Permission Denied');
+      }
     }
 
     /**
@@ -178,7 +190,7 @@ class CustomerController extends Controller
 
       Excel::import(new CustomersImport, $request->file('file')->store('temp'));
       return redirect()->route('customers.index')
-        ->with('message', 'Customer Deleted Successfully.');
+        ->with('message', 'File Imported Successfully.');
     }
 
     /**

@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-blue-500 hover:text-blue-700" :href="route('customers.index')">&#8592; Customers</inertia-link>
+      <inertia-link class="text-green-700 hover:text-green-900" :href="route('customers.index')">&#8592; Customers</inertia-link>
     </h1>
     <div class="bg-white shadow-md rounded">
       <form @submit.prevent="store">
@@ -9,7 +9,7 @@
             <div class="mb-4">
               <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
               <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline required" id="name" placeholder="Name..." v-model="form.name">
-              <div v-if="errors.name" class="text-red-500">{{ errors.name[0] }}</div>
+              <div v-if="errors.name" class="text-red-500">{{ errors.name }}</div>
             </div>
             <div class="mb-4">
               <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     store() {
-      this.form.put(this.route('customers.store'))
+      this.form.post(this.route('customers.store'))
     },
   },
 }

@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ArticleController;
+use Illuminate\Support\Facades\Auth;
 
 use Inertia\Inertia;
 
@@ -29,10 +29,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
       'canRegister' => Route::has('register'),
       'laravelVersion' => Application::VERSION,
       'phpVersion' => PHP_VERSION,
+      'isAdmin' => Auth::user()->hasRole('admin'),
     ]);
   });
   Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard',[
+      'isAdmin' => Auth::user()->hasRole('admin'),
+    ]);
   })->name('dashboard');
 
   Route::resource('/customers', CustomerController::class);

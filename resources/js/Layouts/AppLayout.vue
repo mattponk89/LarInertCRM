@@ -26,7 +26,7 @@
                   Customers
                 </jet-nav-link>
               </div>
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.isAdmin">
                 <jet-nav-link :href="route('import-export')" :active="route().current('import-export')">
                   Import/Export
                 </jet-nav-link>
@@ -103,7 +103,7 @@
               Customers
             </jet-responsive-nav-link>
           </div>
-          <div class="pt-2 pb-3 space-y-1">
+          <div class="pt-2 pb-3 space-y-1" v-if="$page.props.isAdmin">
             <jet-responsive-nav-link :href="route('import-export')" :active="route().current('import-export')">
               Import/Export
             </jet-responsive-nav-link>
